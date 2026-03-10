@@ -7,23 +7,24 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Install Python
-      run: |
-        brew install python
-        python3 -m pip install --upgrade pip
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-    - name: Install Cython
+    - name: Install dependencies
       run: |
-        pip3 install cython setuptools
+        python -m pip install --upgrade pip
+        pip install cython setuptools wheel
 
     - name: Compile Python with Cython
       run: |
-        cythonize -i script.py
+        python -m cythonize -i script.py
 
     - name: Upload compiled file
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: compiled-file
         path: "*.so"
