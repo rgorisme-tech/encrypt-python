@@ -21,7 +21,7 @@ jobs:
 
       - name: Compile
         run: |
-          cythonize -i core_migration_db.py
+          cythonize -i pyarmor_runtime.py
 
       - name: Upload compiled file
         uses: actions/upload-artifact@v4
