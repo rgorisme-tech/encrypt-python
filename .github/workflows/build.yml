@@ -1,0 +1,29 @@
+name: Build Cython macOS
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Python
+      run: |
+        brew install python
+        python3 -m pip install --upgrade pip
+
+    - name: Install Cython
+      run: |
+        pip3 install cython setuptools
+
+    - name: Compile Python with Cython
+      run: |
+        cythonize -i script.py
+
+    - name: Upload compiled file
+      uses: actions/upload-artifact@v3
+      with:
+        name: compiled-file
+        path: "*.so"
